@@ -12,3 +12,14 @@ apt-get update
 apt-get install -y --force-yes libpq5 libpq-dev
 apt-get install -y --force-yes kamailio kamailio-tls-modules kamailio-postgres-modules kamailio-outbound-modules kamailio-extra-modules \
 kamailio-xml-modules
+
+#add kamailio cron entries
+#write out current crontab
+crontab -l > mycron
+#echo new cron into cron file
+echo "*/10 * * * * /usr/sbin/kamcmd dialplan.reload>> /var/log/cron.log 2>&1" >> mycron
+echo "*/10 * * * * /usr/sbin/kamcmd dispatcher.reload>> /var/log/cron.log 2>&1" >> mycron
+echo "*/10 * * * * /usr/sbin/kamcmd permissions.addressReload>> /var/log/cron.log 2>&1" >> mycron
+#install new cron file
+crontab mycron
+rm mycron

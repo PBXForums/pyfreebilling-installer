@@ -23,3 +23,13 @@ echo "*/10 * * * * /usr/sbin/kamcmd permissions.addressReload >> /var/log/cron.l
 #install new cron file
 crontab mycron
 rm mycron
+
+#install freeswitch
+echo "deb http://files.freeswitch.org/repo/deb/freeswitch-1.6/ jessie main" > /etc/apt/sources.list.d/freeswitch.list
+wget -O - https://files.freeswitch.org/repo/deb/debian/freeswitch_archive_g0.pub | apt-key add -
+apt-get update 
+apt-get install -y --force-yes freeswitch-meta-bare freeswitch-mod-commands freeswitch-meta-codecs freeswitch-mod-console \
+freeswitch-mod-logfile freeswitch-conf-vanilla freeswitch-mod-lua freeswitch-mod-cdr-csv freeswitch-mod-event-socket freeswitch-mod-sofia \
+freeswitch-mod-sofia-dbg freeswitch-mod-loopback freeswitch-mod-db freeswitch-mod-dptools freeswitch-mod-hash freeswitch-mod-esl \
+freeswitch-mod-dialplan-xml freeswitch-dbg freeswitch-mod-directory freeswitch-mod-nibblebill
+apt-get install -y --force-yes odbc-postgresql unixodbc-bin unixodbc-dev
